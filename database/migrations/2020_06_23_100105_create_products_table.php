@@ -16,21 +16,21 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('product_name');
-            $table->string('1');
-            $table->string('2');
-            $table->string('3');
-            $table->string('4');
-            $table->string('5');
-            $table->string('6');
-            $table->string('7');
-            $table->string('8');
-            $table->string('9');
-            $table->string('10');
-            $table->string('11');
-            $table->string('12');
-            $table->string('13');
-            $table->string('14');
-            $table->string('15');
+            $table->string('atelectasis');
+            $table->string('cardiomegaly');
+            $table->string('effusion');
+            $table->string('infiltration');
+            $table->string('mass');
+            $table->string('nodule');
+            $table->string('pneumonia');
+            $table->string('pneumothorax');
+            $table->string('consolidation');
+            $table->string('edema');
+            $table->string('emphysema');
+            $table->string('fibrosis');
+            $table->string('pleural_thickening');
+            $table->string('hernia');
+            $table->string('no_finding');
             $table->timestamps();
         });
     }

@@ -9,28 +9,28 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use App\Product;
 
-class ProductImport implements ToModel, WithHeadingRow
+class ProductImport implements ToModel, WithHeadingRow, WithChunkReading, WithBatchInserts
 {
 
     public function model(array $row)
     {
         return new Product([
             'product_name' => $row['image_index'],
-            '1' => $row['atelectasis'],
-            '2' => $row['cardiomegaly'],
-            '3' => $row['effusion'],
-            '4' => $row['infiltration'],
-            '5' => $row['mass'],
-            '6' => $row['nodule'],
-            '7' => $row['pneumonia'],
-            '8' => $row['pneumothorax'],
-            '9' => $row['consolidation'],
-            '10' => $row['edema'],
-            '11' => $row['emphysema'],
-            '12' => $row['fibrosis'],
-            '13' => $row['pleural_thickening'],
-            '14' => $row['hernia'],
-            '15' => $row['no_finding']
+            'atelectasis' => $row['atelectasis'],
+            'cardiomegaly' => $row['cardiomegaly'],
+            'effusion' => $row['effusion'],
+            'infiltration' => $row['infiltration'],
+            'mass' => $row['mass'],
+            'nodule' => $row['nodule'],
+            'pneumonia' => $row['pneumonia'],
+            'pneumothorax' => $row['pneumothorax'],
+            'consolidation' => $row['consolidation'],
+            'edema' => $row['edema'],
+            'emphysema' => $row['emphysema'],
+            'fibrosis' => $row['fibrosis'],
+            'pleural_thickening' => $row['pleural_thickening'],
+            'hernia' => $row['hernia'],
+            'no_finding' => $row['no_finding']
         ]);
     }
 
