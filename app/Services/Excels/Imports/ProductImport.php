@@ -9,7 +9,7 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use App\Product;
 
-class ProductImport implements ToModel, WithHeadingRow, WithChunkReading, WithBatchInserts
+class ProductImport implements ToModel, WithHeadingRow, WithChunkReading, WithBatchInserts, ShouldQueue
 {
 
     public function model(array $row)

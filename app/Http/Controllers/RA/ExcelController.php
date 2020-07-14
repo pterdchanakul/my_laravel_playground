@@ -27,23 +27,24 @@ class ExcelController extends Controller
     public function excelUploadProcess(Request $request)
     {
         // Get default limit
-        $normalTimeLimit = ini_get('max_execution_time');
+        // $normalTimeLimit = ini_get('max_execution_time');
 
         // Set new limit
-        ini_set('max_execution_time', 3600);
+        // ini_set('max_execution_time', 3600);
 
 
         $excelFile = $request->file('excelFile');
         $fileExtension = $excelFile->getClientOriginalExtension();
-        // if ($fileExtension != 'xlsx' && $fileExtension != 'xls') {
-        //     abort(403, "ไม่สามารถใช้ไฟล์นามสกุล " . $fileExtension . " ได้ อนุญาติเฉพาะไฟล์นามสกุล .xlsx และ .xls เท่านั้น");
-        // }
+        $supportExtension = ['xls', 'xlsx', 'csv'];
+        if (!in_array($fileExtension, $supportExtension, true)) {
+            abort(403, "ไม่สามารถใช้ไฟล์นามสกุล " . $fileExtension . " ได้ อนุญาติเฉพาะไฟล์นามสกุล .xlsx, .xls, และ .csv เท่านั้น");
+        }
 
-        $startTime = microtime(true);
+        // $startTime = microtime(true);
         Excel::import(new ProductImport, $excelFile);
-        $runTime = microtime(true) - $startTime;
-        ini_set('max_execution_time', $normalTimeLimit);
-        return $runTime;
-
+        return response()->json(array("foo" => "bar"), 200);
+        // $runTime = microtime(true) - $startTime;
+        // ini_set('max_execution_time', $normalTimeLimit);
+        // return $runTime;
     }
 }
