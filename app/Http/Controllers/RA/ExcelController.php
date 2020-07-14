@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Services\Excels\Imports\ProductImport;
+use App\Services\Excels\Imports\ExcelCollectionImport;
 
 class ExcelController extends Controller
 {
@@ -35,13 +36,13 @@ class ExcelController extends Controller
 
         $excelFile = $request->file('excelFile');
         $fileExtension = $excelFile->getClientOriginalExtension();
-        $supportExtension = ['xls', 'xlsx', 'csv'];
+        $supportExtension = ['xlsx', 'csv'];
         if (!in_array($fileExtension, $supportExtension, true)) {
-            abort(403, "ไม่สามารถใช้ไฟล์นามสกุล " . $fileExtension . " ได้ อนุญาติเฉพาะไฟล์นามสกุล .xlsx, .xls, และ .csv เท่านั้น");
+            abort(403, "ไม่สามารถใช้ไฟล์นามสกุล " . $fileExtension . " ได้ อนุญาติเฉพาะไฟล์นามสกุล .xlsx, และ .csv เท่านั้น");
         }
 
         // $startTime = microtime(true);
-        Excel::import(new ProductImport, $excelFile);
+        Excel::import(new ExcelCollectionImport, $excelFile);
         return response()->json(array("foo" => "bar"), 200);
         // $runTime = microtime(true) - $startTime;
         // ini_set('max_execution_time', $normalTimeLimit);
