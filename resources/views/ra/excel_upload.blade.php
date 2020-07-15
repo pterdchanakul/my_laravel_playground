@@ -11,7 +11,7 @@
                         @csrf
                         <div class="card">
                             <div class="card-header">
-                                <strong>Upload ข้อมูลผ่าน Excel</strong>
+                                <strong>ทดลอง Upload ด้วยไฟล์ Excel ผ่าน Excel</strong>
                             </div>
                             <div class="card-body card-block">
                                 <div class="row form-group">

@@ -43,7 +43,7 @@ class ExcelController extends Controller
 
         // $startTime = microtime(true);
         Excel::import(new ExcelCollectionImport, $excelFile);
-        return response()->json(array("foo" => "bar"), 200);
+        return response()->json(array("สถานะ" => "ข้อมูลรอการ Process"), 202);
         // $runTime = microtime(true) - $startTime;
         // ini_set('max_execution_time', $normalTimeLimit);
         // return $runTime;
