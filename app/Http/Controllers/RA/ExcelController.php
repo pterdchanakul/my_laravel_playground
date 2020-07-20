@@ -5,8 +5,9 @@ namespace App\Http\Controllers\RA;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Services\Excels\Imports\ProductImport;
+use Maatwebsite\Excel\HeadingRowImport;
 use App\Services\Excels\Imports\ExcelCollectionImport;
+use App\Services\Excels\Exports\ExcelExport;
 
 class ExcelController extends Controller
 {
@@ -36,16 +37,56 @@ class ExcelController extends Controller
 
         $excelFile = $request->file('excelFile');
         $fileExtension = $excelFile->getClientOriginalExtension();
+
+        // Validate
         $supportExtension = ['xlsx', 'csv'];
         if (!in_array($fileExtension, $supportExtension, true)) {
-            abort(403, "ไม่สามารถใช้ไฟล์นามสกุล " . $fileExtension . " ได้ อนุญาติเฉพาะไฟล์นามสกุล .xlsx, และ .csv เท่านั้น");
+            abort(403, "Non Support Extension File Name");
+        }
+
+        //validate headers
+        $formatHeadings = [
+            'image_index',
+            'atelectasis',
+            'cardiomegaly',
+            'effusion',
+            'infiltration',
+            'mass',
+            'nodule',
+            'pneumonia',
+            'pneumothorax',
+            'consolidation',
+            'edema',
+            'emphysema',
+            'fibrosis',
+            'pleural_thickening',
+            'hernia',
+            'no_finding'
+        ];
+        $importHeadings = (new HeadingRowImport)->toArray($excelFile)[0][0];
+        if (array_intersect($formatHeadings, $importHeadings) != $formatHeadings) {
+            abort(403, 'Non Support Header');
         }
 
         // $startTime = microtime(true);
+
+        // Add job
         Excel::import(new ExcelCollectionImport, $excelFile);
+
+        // return response
         return response()->json(array("สถานะ" => "ข้อมูลรอการ Process"), 202);
         // $runTime = microtime(true) - $startTime;
         // ini_set('max_execution_time', $normalTimeLimit);
         // return $runTime;
+    }
+
+    public function excelExportIndex()
+    {
+        return view('ra.excel_export');
+    }
+
+    public function exportToExcel(Request $request)
+    {
+        return Excel::download(new ExcelExport($request->order_number), 'excel.xlsx');
     }
 }
